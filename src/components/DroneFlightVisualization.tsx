@@ -1,15 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stats, Environment } from '@react-three/drei';
 import TerrainModel from './TerrainModel';
 import FlightPath from './FlightPath';
-
-// Types for the flight path data
-export interface TrackPoint {
-  latitude: number;
-  longitude: number;
-  altitude: number;
-}
+import { TrackPoint } from '../types/DroneTypes';
 
 interface DroneFlightVisualizationProps {
   trackPoints: TrackPoint[];

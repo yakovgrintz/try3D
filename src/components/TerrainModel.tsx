@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
-import { TrackPoint } from './DroneFlightVisualization';
+import { TrackPoint } from '../types/DroneTypes';
 
 interface TerrainModelProps {
   trackPoints: TrackPoint[];
@@ -9,25 +9,10 @@ interface TerrainModelProps {
   extent: number; // in meters
 }
 
-// Helper function to convert lat/long to x/y/z coordinates
-const geoToCartesian = (
-  latitude: number, 
-  longitude: number, 
-  altitude: number,
-  center: { latitude: number; longitude: number }
-): THREE.Vector3 => {
-  // Simple conversion for demonstration
-  // In a real app, you'd use proper geo-coordinate transformations
-  const scale = 111000; // rough meters per degree at equator
-  const x = (longitude - center.longitude) * scale;
-  const z = (latitude - center.latitude) * scale;
-  return new THREE.Vector3(x, altitude, z);
-};
-
-// Improved terrain generation with more variance
+// Function to generate terrain height map (simulated)
 const generateTerrainData = (
-  centerLat: number,
-  centerLng: number,
+  _: number, // centerLat (unused but kept for API consistency)
+  __: number, // centerLng (unused but kept for API consistency)
   resolution: number,
   extent: number,
 ): number[][] => {
@@ -108,8 +93,8 @@ const TerrainModel: React.FC<TerrainModelProps> = ({ trackPoints, resolution, ex
     return geo;
   }, [terrainData, extent]);
   
-  // Add some subtle animation to make it look more dynamic
-  useFrame((state) => {
+  // Add some subtle animation to make it look more dynamic (not using state parameter)
+  useFrame(() => {
     if (meshRef.current) {
       // Optional: add subtle animation or effects
     }

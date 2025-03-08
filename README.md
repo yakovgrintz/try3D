@@ -8,7 +8,8 @@ This React application visualizes drone flight paths in 3D space, including buff
 - Path buffering to create polygons around the flight path
 - Digital Terrain Model (DTM) as a base layer with 10m resolution
 - Grid point generation inside buffered polygons for terrain modeling
-- Elevation sampling and interpolation for terrain visualization
+- Elevation sampling from Open-Elevation API
+- Interpolation for terrain visualization
 - Interactive controls for exploring the terrain and flight path
 
 ## Requirements
@@ -41,7 +42,7 @@ The main component `AdvancedDroneVisualization` accepts the following props:
 ```typescript
 interface AdvancedDroneVisualizationProps {
   trackPoints: TrackPoint[]; // Array of latitude, longitude, altitude points
-  bufferDistance?: number; // Buffer distance in meters (default: 50)
+  bufferDistance?: number; // Buffer distance in meters (default: 150)
   terrainResolution?: number; // Resolution of terrain in meters (default: 10)
 }
 
@@ -70,7 +71,7 @@ function App() {
     <div style={{ width: '100%', height: '100vh' }}>
       <AdvancedDroneVisualization 
         trackPoints={sampleTrackPoints} 
-        bufferDistance={50}
+        bufferDistance={100}
         terrainResolution={10}
       />
     </div>
@@ -82,24 +83,61 @@ function App() {
 
 - **Turf.js**: Used for GIS operations like creating buffered polygons and point grids
 - **Plotly.js**: Used for 3D visualization of terrain, flight path, and buffer zones
+- **Open-Elevation API**: Fetches real-world elevation data for the terrain
 - **Terrain Rendering**: 
   - Creates a grid of points within the buffered polygon
-  - Gets elevation data for each point (simulated in this demo)
+  - Gets elevation data for each point from Open-Elevation API
   - Interpolates missing elevation data
   - Renders as a 3D surface
 - **Buffer Zone**: 
   - Applies buffer operation to the flight path using Turf.js
   - Visualizes the buffer area as a polygon overlay
 
-## Integration with Elevation APIs
+## Deployment Instructions
 
-The current implementation uses simulated terrain data. To integrate with a real elevation API:
+### Deploying to Vercel
 
-1. Replace the `getElevationData` function in `AdvancedDroneVisualization.tsx`
-2. Implement API calls to services like:
-   - Google Maps Elevation API
-   - Mapbox Terrain API
-   - Open-Elevation API
+This project includes a `vercel.json` configuration file for easy deployment to Vercel:
+
+1. Create a Vercel account at [vercel.com](https://vercel.com) if you don't have one
+2. Install the Vercel CLI:
+   ```bash
+   npm install -g vercel
+   ```
+3. Login to Vercel:
+   ```bash
+   vercel login
+   ```
+4. Deploy the project:
+   ```bash
+   vercel
+   ```
+5. For production deployment:
+   ```bash
+   vercel --prod
+   ```
+
+Alternatively, you can connect your GitHub repository to Vercel for automatic deployments:
+
+1. Push your code to GitHub:
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git remote add origin <your-github-repo-url>
+   git push -u origin main
+   ```
+2. Import the repository in the Vercel dashboard
+3. Configure build settings (should be detected automatically)
+4. Deploy
+
+### Environment Variables
+
+If you're using your own API keys, you can configure them as environment variables in Vercel:
+
+1. In the Vercel dashboard, go to your project settings
+2. Navigate to the "Environment Variables" section
+3. Add your API keys and other configuration variables
 
 ## Customization
 

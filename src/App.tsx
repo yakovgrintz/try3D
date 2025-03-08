@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 import { TrackPoint } from './types/DroneTypes'
 import AdvancedDroneVisualization from './components/AdvancedDroneVisualization'

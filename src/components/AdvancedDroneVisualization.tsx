@@ -2,7 +2,6 @@ import React, { useMemo, useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import * as Plotly from 'plotly.js';
 import * as turf from '@turf/turf';
-import { Delaunay } from 'd3-delaunay';
 import { TrackPoint } from '../types/DroneTypes';
 
 interface AdvancedDroneVisualizationProps {

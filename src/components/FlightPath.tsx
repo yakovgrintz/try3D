@@ -2,7 +2,7 @@ import React, { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { Line } from '@react-three/drei';
-import { TrackPoint } from './DroneFlightVisualization';
+import { TrackPoint } from '../types/DroneTypes';
 
 interface FlightPathProps {
   trackPoints: TrackPoint[];
@@ -56,7 +56,7 @@ const FlightPath: React.FC<FlightPathProps> = ({ trackPoints }) => {
   const progressRef = useRef(0);
   
   // Animate the drone along the path
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (droneRef.current && pathPoints.length > 1) {
       // Update the progress value (0-1 range)
       progressRef.current = (progressRef.current + delta * 0.1) % 1;
